@@ -1,0 +1,33 @@
+== firmadigital-recepcion
+
+# Enviamos un json para probar el servicio desde consola:
+---
+export DIR_PDFS='/home/alexjcm/Descargas/firmaec-original-v2.8.1/z_pdfs-para-probar-firmado'  &&
+export URL_SERVICIO="http://localhost:8180/recepcion/rest"  &&
+
+export BASE64=`base64 -w0 ${DIR_PDFS}/certificado1.pdf`   &&
+export JSON="{\"nombreDocumento\":\"certificado1.pdf\",\"archivo\":\"${BASE64}\"}"         &&
+export RESPUESTA=`curl -s -H "Content-Type: application/json" -X POST -d "${JSON}" ${URL_SERVICIO}`  &&  
+echo $RESPUESTA
+---
+
+
+
+# Enviamos la ruta del archivo generado anteriormente para probar el servicio desde consola:
+---
+export URL_SERVICIO="http://localhost:8180/recepcion/rest?dirpdf="   &&
+export RUTA_DOC_A_VERIFICAR="/opt/wildfly-static/certificado1.pdf"   &&
+export URL_FINAL=${URL_SERVICIO}${RUTA_DOC_A_VERIFICAR}
+export RESPUESTA=`curl -s -H "Content-Type: application/json" -X GET ${URL_FINAL}`  &&  
+echo $RESPUESTA
+---
+
+
+# Enviamos la url del archivo generado anteriormente para probar el servicio desde consola:
+---
+export URL_SERVICIO="http://localhost:8180/recepcion/rest?dirpdf="   &&
+export URL_DOC_A_VERIFICAR="http://localhost:8180/certificado1.pdf"   &&
+export URL_FINAL=${URL_SERVICIO}${RUTA_DOC_A_VERIFICAR}
+export RESPUESTA=`curl -s -H "Content-Type: application/json" -X GET ${URL_FINAL}`  &&  
+echo $RESPUESTA
+---
