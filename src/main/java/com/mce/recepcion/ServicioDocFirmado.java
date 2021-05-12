@@ -34,6 +34,9 @@ public class ServicioDocFirmado {
 
     //En esta carpeta se almacenarán todos los pdfs firmados
     private static final String DIR_DOCS_FIRMADOS = "/opt/wildfly-static";
+    private static final String RESP_OK = "OK";
+    private static final String RESP_NOT_FOUND = "NOT_FOUND";
+    private static final String RESP_ERROR = "ERROR";
 
     private static final Logger logger = Logger.getLogger(ServicioDocFirmado.class.getName());
 
@@ -97,11 +100,11 @@ public class ServicioDocFirmado {
             out.write(archivo);
             // Retorno de bandera para el servicio web de firma-digital         
             System.out.println("--> OK");
-            return Response.ok("OK").build();
+            return Response.status(Status.OK).entity(RESP_OK).build();
 
         } catch (IOException ex) {
             logger.log(Level.SEVERE, "ERROR -->{0}", ex.toString());
-            return Response.ok("ERROR").build();
+            return Response.status(Status.BAD_REQUEST).entity(RESP_ERROR).build();
         }
     }
 
@@ -110,8 +113,8 @@ public class ServicioDocFirmado {
      * existe. Para ello se debe enviar en un parámetro la ruta o url del pdf
      * firmado:
      *
-     * ../recepcion/rest?dirpdf=/opt/wildfly-static/certificado1.pdf
-     * ../recepcion/rest?dirpdf=http://0.0.0.0:8180/static/certificado1.pdf
+     * ../rest?dirpdf=/opt/wildfly-static/certificado1.pdf
+     * ../rest?dirpdf=http://0.0.0.0:8180/static/certificado1.pdf
      *
      * @param dirPdf
      * @return
@@ -119,39 +122,38 @@ public class ServicioDocFirmado {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response existeArchivoFirmado(@QueryParam("dirpdf") String dirPdf) {
-        // Primero verificamos si la direccion del pdf es: una Url o una Ruta.
+        // Verificamos si la direccion del pdf es: una Url o una Ruta.
         String aux = dirPdf.trim().toLowerCase();
         boolean esUrl = aux.startsWith("http://") || aux.startsWith("https://");
         if (esUrl) {
             try {
-                System.out.println("dirPdf es una url.");
                 HttpURLConnection.setFollowRedirects(false);
                 HttpURLConnection con;
                 con = (HttpURLConnection) new URL(dirPdf).openConnection();
                 con.setRequestMethod("HEAD");
-
                 //return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
                 if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    return Response.ok("SI").build();
+                    return Response.status(Status.OK).header("Access-Control-Allow-Origin", "*").entity(RESP_OK).build();
                 }
-                return Response.ok("NO").build();
+                return Response.status(Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").entity(RESP_NOT_FOUND).build();
 
             } catch (MalformedURLException ex) {
                 logger.log(Level.SEVERE, ex.toString());
-                return Response.ok("MalformedURLException --> ").build();
+                return Response.status(Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*")
+                        .entity("ex" + ex.toString()).build();
             } catch (IOException ex) {
                 logger.log(Level.SEVERE, ex.toString());
-                return Response.ok("IOException --> ").build();
+                // BAD_REQUEST = 400
+                return Response.status(Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*")
+                        .entity("ex" + ex.toString()).build();
             }
         }
 
-        // es una ruta
-        System.out.println("dirPdf es una ruta.");
         File file = new File(dirPdf);
         if (file.isFile()) {
-            return Response.ok("SI").build();
+            return Response.status(Status.OK).header("Access-Control-Allow-Origin", "*").entity(RESP_OK).build();
         }
         logger.log(Level.SEVERE, "El Pdf firmado no existe en el directorio: " + DIR_DOCS_FIRMADOS);
-        return Response.ok("NO").build();
+        return Response.status(Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").entity(RESP_NOT_FOUND).build();
     }
 }
