@@ -1,5 +1,12 @@
 = certificacion-electronica-docs
+
 Servicio web REST para recibir documentos firmados digitalmente.
+
+== Prerequisitos
+
+-  http://www.oracle.com/technetwork/java/javase/downloads/[Java 8] - para compilar y ejecutar la aplicación
+- https://maven.apache.org/[Maven] - Dependency Management.
+
 
 == Cómo compilar
 
@@ -15,23 +22,22 @@ Se debe copiar el archivo `target/recepcion.war` a la carpeta `standalone/deploy
 
 == Desarrollo
 
-Para probar el servicio web ejecutamos los siguientes comandos desde consola:
+Para probar el servicio web se puede ejecutar los siguientes comandos desde consola:
 [source,bash]
 ----
-export DIR_PDFS='/home/alexjcm/Descargas/firmaec-original-v2.8.1/z_pdfs-para-probar-firmado'  &&
 export URL_SERVICIO="http://localhost:8180/recepcion/rest"  &&
-export BASE64=`base64 -w0 ${DIR_PDFS}/certificado1.pdf`   &&
-export JSON="{\"nombreDocumento\":\"certificado1.pdf\",\"archivo\":\"${BASE64}\"}"         &&
+export BASE64=`base64 -w0 /home/<your-user>/Descargas/documento-ejemplo.pdf`   &&
+export JSON="{\"nombreDocumento\":\"documento-ejemplo.pdf\",\"archivo\":\"${BASE64}\"}"         &&
 export RESPUESTA=`curl -s -H "Content-Type: application/json" -X POST -d "${JSON}" ${URL_SERVICIO}`  &&  
 echo $RESPUESTA
 ----
 
 
-Luego, enviamos la ruta del archivo generado anteriormente para probar el servicio:
+Luego, enviamos la ruta absoluta del archivo generado anteriormente para probar el servicio:
 [source,bash]
 ----
 export URL_SERVICIO="http://localhost:8180/recepcion/rest?dirpdf="   &&
-export RUTA_DOC_A_VERIFICAR="/opt/wildfly-static/certificado1.pdf"   &&
+export RUTA_DOC_A_VERIFICAR="/opt/wildfly-static/documento-ejemplo.pdf"   &&
 export URL_FINAL=${URL_SERVICIO}${RUTA_DOC_A_VERIFICAR}
 export RESPUESTA=`curl -s -H "Content-Type: application/json" -X GET ${URL_FINAL}`  &&  
 echo $RESPUESTA
@@ -49,11 +55,6 @@ echo $RESPUESTA
 ----
 
 
-== Construido con
-
-* https://maven.apache.org/[Maven] - Dependency Management
-
-
 == Versiones
 
 Usamos http://semver.org[SemVer] para versionar.
@@ -61,5 +62,4 @@ Usamos http://semver.org[SemVer] para versionar.
 
 == Licencia
 
-Este proyecto está licenciado bajo la licencia AGPL v3.
-Revisar LICENSE para detalles.
+Este proyecto está licenciado bajo la licencia AGPL. Revisar el archivo LICENSE para  ver más detalles.
