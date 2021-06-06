@@ -1,0 +1,10 @@
+language: java
+
+sudo: false
+
+os: linux
+
+jdk: openjdk8
+
+build:
+  script: "mvn install -B"
