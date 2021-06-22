@@ -5,7 +5,7 @@ image:https://img.shields.io/badge/License-GPLv3-blue.svg[License: GPL v3, https
 
 Servicio web REST para recibir documentos firmados digitalmente.
 
-== Prerequisitos
+== Prerrequisitos
 
 -  http://www.oracle.com/technetwork/java/javase/downloads/[Java 8] - para compilar y ejecutar la aplicación
 - https://maven.apache.org/[Maven] - Dependency Management.
@@ -61,6 +61,11 @@ echo $RESPUESTA
 == Versiones
 
 Usamos http://semver.org[SemVer] para versionar.
+
+
+== Documentación
+
+Ver documentación en: https://alexjcm.github.io/certificacion-electronica-docs
 
 
 == Licencia
