@@ -1,6 +1,6 @@
-= certificacion-electronica-docs
+= Certificacion electronica Docs
 
-image:https://travis-ci.com/AlexJCM/certificacion-electronica-docs.svg?branch=main["Build Status", link="https://travis-ci.com/AlexJCM/certificacion-electronica-docs"]
+image:https://github.com/alexjcm/certificacion-electronica-docs/actions/workflows/main.yml/badge.svg["Build and testing", link="https://github.com/alexjcm/certificacion-electronica-docs/actions/workflows/main.yml"]
 image:https://img.shields.io/badge/License-GPLv3-blue.svg[License: GPL v3, https://www.gnu.org/licenses/gpl-3.0] 
 
 Servicio web REST para recibir documentos firmados digitalmente por el servicio de Firma Digital.
@@ -8,6 +8,7 @@ Servicio web REST para recibir documentos firmados digitalmente por el servicio 
 == Prerrequisitos
 
 - http://www.oracle.com/technetwork/java/javase/downloads/[Java 8] - para compilar y ejecutar la aplicación
+
 - https://maven.apache.org/[Maven] - Dependency Management.
 
 
@@ -15,6 +16,7 @@ Servicio web REST para recibir documentos firmados digitalmente por el servicio 
 
 Para compilar se debe utilizar Apache Maven:
 
+[source, bash]
 ----
 mvn clean package
 ----
@@ -26,6 +28,7 @@ Se debe copiar el archivo `target/recepcion.war` a la carpeta `standalone/deploy
 == Desarrollo
 
 Para probar el servicio web se puede ejecutar los siguientes comandos desde consola:
+
 [source,bash]
 ----
 export URL_SERVICIO="http://localhost:8180/recepcion/rest"  &&
@@ -37,6 +40,7 @@ echo $RESPUESTA
 
 
 Luego, enviamos la ruta absoluta del archivo generado anteriormente para probar el servicio:
+
 [source,bash]
 ----
 export URL_SERVICIO="http://localhost:8180/recepcion/rest?dirpdf="   &&
@@ -48,6 +52,7 @@ echo $RESPUESTA
 
 
 También se puede enviar la url del archivo generado anteriormente para probar el servicio:
+
 [source,bash]
 ----
 export URL_SERVICIO="http://localhost:8180/recepcion/rest?dirpdf="   &&
