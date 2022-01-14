@@ -130,7 +130,7 @@ public class ServicioDocFirmado {
      * firmado:
      *
      * ../rest?dirpdf=/opt/wildfly-static/certificado1.pdf
-     * ../rest?dirpdf=http://0.0.0.0:8180/static/certificado1.pdf
+     * ../rest?dirpdf=http://0.0.0.0:7776/static/certificado1.pdf
      *
      * @param dirPdf
      * @return

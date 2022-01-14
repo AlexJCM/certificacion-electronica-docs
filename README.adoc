@@ -7,7 +7,7 @@ Servicio web REST para recibir documentos firmados digitalmente por el servicio 
 
 == Prerrequisitos
 
-- http://www.oracle.com/technetwork/java/javase/downloads/[Java 8] - para compilar y ejecutar la aplicación
+- http://www.oracle.com/technetwork/java/javaee/downloads/[Java 8] - para compilar y ejecutar la aplicación
 
 - https://maven.apache.org/[Maven] - Dependency Management.
 
@@ -31,7 +31,7 @@ Para probar el servicio web se puede ejecutar los siguientes comandos desde cons
 
 [source,bash]
 ----
-export URL_SERVICIO="http://localhost:8180/recepcion/rest"  &&
+export URL_SERVICIO="http://localhost:7776/recepcion/rest"  &&
 export BASE64=`base64 -w0 /home/<your-user>/Descargas/documento-ejemplo.pdf`   &&
 export JSON="{\"nombreDocumento\":\"documento-ejemplo.pdf\",\"archivo\":\"${BASE64}\"}"         &&
 export RESPUESTA=`curl -s -H "Content-Type: application/json" -X POST -d "${JSON}" ${URL_SERVICIO}`  &&  
@@ -43,7 +43,7 @@ Luego, enviamos la ruta absoluta del archivo generado anteriormente para probar 
 
 [source,bash]
 ----
-export URL_SERVICIO="http://localhost:8180/recepcion/rest?dirpdf="   &&
+export URL_SERVICIO="http://localhost:7776/recepcion/rest?dirpdf="   &&
 export RUTA_DOC_A_VERIFICAR="/opt/wildfly-static/documento-ejemplo.pdf"   &&
 export URL_FINAL=${URL_SERVICIO}${RUTA_DOC_A_VERIFICAR}
 export RESPUESTA=`curl -s -H "Content-Type: application/json" -X GET ${URL_FINAL}`  &&  
@@ -55,8 +55,8 @@ También se puede enviar la url del archivo generado anteriormente para probar e
 
 [source,bash]
 ----
-export URL_SERVICIO="http://localhost:8180/recepcion/rest?dirpdf="   &&
-export URL_DOC_A_VERIFICAR="http://localhost:8180/certificado1.pdf"   &&
+export URL_SERVICIO="http://localhost:7776/recepcion/rest?dirpdf="   &&
+export URL_DOC_A_VERIFICAR="http://localhost:7776/certificado1.pdf"   &&
 export URL_FINAL=${URL_SERVICIO}${RUTA_DOC_A_VERIFICAR}
 export RESPUESTA=`curl -s -H "Content-Type: application/json" -X GET ${URL_FINAL}`  &&  
 echo $RESPUESTA
@@ -70,9 +70,9 @@ Usamos http://semver.org[SemVer] para versionar.
 
 == Documentación
 
-Ver documentación del proyecto en: https://alexjcm.github.io/certificacion-electronica-docs
+https://alexjcm.github.io/certificacion-electronica-docs[Ver documentación]
 
 
 == Licencia
 
-Este proyecto está licenciado bajo la licencia GPL v3. Revise el archivo <<LICENSE, LICENSE>> para más detalles.
+Este proyecto está licenciado bajo la licencia GPL v3. Revise el archivo link:LICENSE[LICENSE] para más detalles.
