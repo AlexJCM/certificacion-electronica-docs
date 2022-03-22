@@ -1,10 +1,10 @@
 package com.mce.recepcion;
 
 import static org.junit.Assert.fail;
+
 import org.junit.Test;
 
 /**
- *
  * @author alexjcm
  */
 public class TestServicioDocFirmado {
@@ -29,7 +29,7 @@ public class TestServicioDocFirmado {
         } catch (Exception e) {
         }
     }
-    
+
     @Test
     public void testJsonInvalido() throws Exception {
         ServicioDocFirmado servicioDocFirmado = new ServicioDocFirmado();
