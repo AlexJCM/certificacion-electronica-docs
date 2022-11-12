@@ -10,11 +10,11 @@ import org.junit.Test;
 public class TestServicioDocFirmado {
 
     @Test
-    public void testArchivoInvalido() throws Exception {
+    public void testInvalidFile() throws Exception {
         ServicioDocFirmado servicioDocFirmado = new ServicioDocFirmado();
         try {
             // la dirección no existe
-            servicioDocFirmado.existeArchivoFirmado("/opt/-static/certificado1.pdf");
+            servicioDocFirmado.checkSignedFileExists("/opt/-static/certificado1.pdf");
             System.out.println(" --> " + servicioDocFirmado.toString());
             //assertEquals("SI", servicioDocFirmado);
             fail();
@@ -22,7 +22,7 @@ public class TestServicioDocFirmado {
         }
         try {
             // no se envia la dirección
-            servicioDocFirmado.existeArchivoFirmado("");
+            servicioDocFirmado.checkSignedFileExists("");
             System.out.println(" --> " + servicioDocFirmado.toString());
             //assertEquals("SI", servicioDocFirmado);
             fail();
@@ -31,19 +31,36 @@ public class TestServicioDocFirmado {
     }
 
     @Test
-    public void testJsonInvalido() throws Exception {
+    public void testInvalidJsonWithoutDocumentName() throws Exception {
         ServicioDocFirmado servicioDocFirmado = new ServicioDocFirmado();
         try {
             // no es json
-            servicioDocFirmado.grabarArchivoFirmado("");
+            servicioDocFirmado.saveSignedFile("");
+            System.out.println(" --> " + servicioDocFirmado.toString());
+            //assertEquals("SI", servicioDocFirmado);
+            fail();
+
+            // json imcompleto
+            servicioDocFirmado.saveSignedFile("{\"archivo\":\"WDWFE3SGY8kqFD\"}");
             System.out.println(" --> " + servicioDocFirmado.toString());
             //assertEquals("SI", servicioDocFirmado);
             fail();
         } catch (Exception e) {
         }
+    }
+
+    @Test
+    public void testInvalidJsonWithoutFile() throws Exception {
+        ServicioDocFirmado servicioDocFirmado = new ServicioDocFirmado();
         try {
+            // no es json
+            servicioDocFirmado.saveSignedFile("");
+            System.out.println(" --> " + servicioDocFirmado.toString());
+            //assertEquals("SI", servicioDocFirmado);
+            fail();
+
             // json imcompleto
-            servicioDocFirmado.grabarArchivoFirmado("{\"archivo\":\"WDWFE3SGY8kqFD\"}");
+            servicioDocFirmado.saveSignedFile("{\"nombreDocumento\":\"test.pdf\"}");
             System.out.println(" --> " + servicioDocFirmado.toString());
             //assertEquals("SI", servicioDocFirmado);
             fail();
