@@ -43,7 +43,7 @@ import javax.ws.rs.core.Response.Status;
  *
  * @author alexjcm
  */
-@Path("/rest")
+@Path("/receiveDocument")
 public class ServicioDocFirmado {
 
     private static final Logger logger = Logger.getLogger(ServicioDocFirmado.class.getName());
@@ -188,8 +188,7 @@ public class ServicioDocFirmado {
 
     @GET
     @Path("/test")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response testService() {
-        return Response.ok("Test desde rest-recepcion").build();
+        return Response.ok("Hello world!").build();
     }
 }
