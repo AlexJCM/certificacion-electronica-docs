@@ -1,9 +1,9 @@
-= Certificacion electronica Docs
+= Certificacion electronica cocumentos
 
 image:https://github.com/alexjcm/certificacion-electronica-docs/actions/workflows/main.yml/badge.svg["Build and testing", link="https://github.com/alexjcm/certificacion-electronica-docs/actions/workflows/main.yml"]
 image:https://img.shields.io/badge/License-GPLv3-blue.svg[License: GPL v3, https://www.gnu.org/licenses/gpl-3.0] 
 
-Servicio web REST para recibir documentos firmados digitalmente por el servicio de Firma Digital.
+Servicio web REST para recibir documentos firmados digitalmente por el servicio de Firma Digital (firmadigital-servicio).
 
 == Prerrequisitos
 
