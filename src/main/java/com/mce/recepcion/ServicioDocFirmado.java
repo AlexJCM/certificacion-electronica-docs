@@ -129,12 +129,12 @@ public class ServicioDocFirmado {
     /**
      * Permite verificar si el pdf firmado devuelto por el sistema firmadigital-servicio existe.
      * Para ello se debe enviar en un parámetro la ruta en el servidor o url del pdf firmado.
-     * Por ejeemplo:
-     * Ruta del pdf en el servidor:
-     * /rest?dirpdf=/opt/wildfly-static/certificado1.pdf
+     * Por ejemplo:
+     *  Ruta del pdf en el servidor:
+     *  /rest?dirpdf=/opt/wildfly-static/certificado1.pdf
      *
-     * Url del pdf:
-     * /rest?dirpdf=http://pruebasmce.info/firmaec/static/certificado1.pdf
+     *  Url del pdf:
+     *  /rest?dirpdf=http://pruebasmce.info/firmaec/static/certificado1.pdf
      *
      * @param pdfLocation
      * @return
