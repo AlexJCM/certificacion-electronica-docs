@@ -1,9 +1,9 @@
-= Certificacion electronica Docs
+= Certificacion electronica cocumentos
 
 image:https://github.com/alexjcm/certificacion-electronica-docs/actions/workflows/main.yml/badge.svg["Build and testing", link="https://github.com/alexjcm/certificacion-electronica-docs/actions/workflows/main.yml"]
 image:https://img.shields.io/badge/License-GPLv3-blue.svg[License: GPL v3, https://www.gnu.org/licenses/gpl-3.0] 
 
-Servicio web REST para recibir documentos firmados digitalmente por el servicio de Firma Digital.
+Servicio web REST para recibir documentos firmados digitalmente por el servicio de Firma Digital (firmadigital-servicio).
 
 == Prerrequisitos
 
@@ -31,7 +31,7 @@ Para probar el servicio web se puede ejecutar los siguientes comandos desde cons
 
 [source,bash]
 ----
-export URL_SERVICIO="http://localhost:7776/recepcion/rest"  &&
+export URL_SERVICIO="http://localhost:7776/recepcion/receiveDocument/saveSignedFile"  &&
 export BASE64=`base64 -w0 /home/<your-user>/Descargas/documento-ejemplo.pdf`   &&
 export JSON="{\"nombreDocumento\":\"documento-ejemplo.pdf\",\"archivo\":\"${BASE64}\"}"         &&
 export RESPUESTA=`curl -s -H "Content-Type: application/json" -X POST -d "${JSON}" ${URL_SERVICIO}`  &&  
@@ -43,7 +43,7 @@ Luego, enviamos la ruta absoluta del archivo generado anteriormente para probar 
 
 [source,bash]
 ----
-export URL_SERVICIO="http://localhost:7776/recepcion/rest?dirpdf="   &&
+export URL_SERVICIO="http://localhost:7776/recepcion/receiveDocument/checkSignedFileExists?location="   &&
 export RUTA_DOC_A_VERIFICAR="/opt/wildfly-static/documento-ejemplo.pdf"   &&
 export URL_FINAL=${URL_SERVICIO}${RUTA_DOC_A_VERIFICAR}
 export RESPUESTA=`curl -s -H "Content-Type: application/json" -X GET ${URL_FINAL}`  &&  
@@ -55,7 +55,7 @@ También se puede enviar la url del archivo generado anteriormente para probar e
 
 [source,bash]
 ----
-export URL_SERVICIO="http://localhost:7776/recepcion/rest?dirpdf="   &&
+export URL_SERVICIO="http://localhost:7776/recepcion/receiveDocument/checkSignedFileExists?location="   &&
 export URL_DOC_A_VERIFICAR="http://localhost:7776/certificado1.pdf"   &&
 export URL_FINAL=${URL_SERVICIO}${RUTA_DOC_A_VERIFICAR}
 export RESPUESTA=`curl -s -H "Content-Type: application/json" -X GET ${URL_FINAL}`  &&  

@@ -3,3 +3,10 @@
 .settings
 nb-configuration.xml
 target
+
+### IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+/out/
