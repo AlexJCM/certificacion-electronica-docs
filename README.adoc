@@ -7,9 +7,11 @@ Servicio web REST para recibir documentos firmados digitalmente por el servicio 
 
 == Prerrequisitos
 
-- http://www.oracle.com/technetwork/java/javaee/downloads/[Java 8] - para compilar y ejecutar la aplicación
+- JDK 11.- Para compilar y ejecutar la aplicación.
 
-- https://maven.apache.org/[Maven] - Dependency Management.
+- WildFly 33.- Para desplegar la aplicación se necesita un servidor de aplicaciones *Jakarta EE 10* disponible en http://www.wildfly.org[wildfly.org]
+
+- Maven 3.- Para compilar y empaquetar se utiliza http://maven.apache.org[Apache Maven].
 
 
 == Cómo compilar
@@ -23,7 +25,7 @@ mvn clean package
 
 == Cómo desplegar
 
-Se debe copiar el archivo `target/recepcion.war` a la carpeta `standalone/deployments` de un servidor de aplicaciones WildFly 20.
+Se debe copiar el archivo `target/recepcion.war` a la carpeta `standalone/deployments` de un servidor de aplicaciones WildFly 29.
 
 == Desarrollo
 

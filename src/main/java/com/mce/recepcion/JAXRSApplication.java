@@ -14,8 +14,8 @@
  */
 package com.mce.recepcion;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import jakarta.ws.rs.ApplicationPath;
+import jakarta.ws.rs.core.Application;
 
 /**
  * Configuración de la aplicacion REST. Permite especificar la ruta que será 

@@ -21,14 +21,12 @@ public class BaseConstants {
     public static final String RESP_NOT_FOUND = "NOT_FOUND";
     public static final String RESP_ERROR = "ERROR";
     public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
-
     public static final String ACCESS_CONTROL_ALLOW_ORIGIN_VALUE = "*";
 
     /**
      * Protocolos HTTP
      */
     public static final String HTTP_PROTOCOL = "http://";
-
     public static final String HTTPS_PROTOCOL = "https://";
 
     public static final String HEAD_METHOD = "HEAD";
