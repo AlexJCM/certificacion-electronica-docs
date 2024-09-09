@@ -1,9 +1,9 @@
-= Certificacion electronica cocumentos
+= Certificacion electronica documentos
 
 image:https://github.com/alexjcm/certificacion-electronica-docs/actions/workflows/main.yml/badge.svg["Build and testing", link="https://github.com/alexjcm/certificacion-electronica-docs/actions/workflows/main.yml"]
 image:https://img.shields.io/badge/License-GPLv3-blue.svg[License: GPL v3, https://www.gnu.org/licenses/gpl-3.0] 
 
-Servicio web REST para recibir documentos firmados digitalmente por el servicio de Firma Digital (firmadigital-servicio).
+Servicio web REST para recibir documentos firmados digitalmente mediante el servicio de Firma Digital (firmadigital-servicio).
 
 == Prerrequisitos
 
@@ -13,57 +13,71 @@ Servicio web REST para recibir documentos firmados digitalmente por el servicio 
 
 - Maven 3.- Para compilar y empaquetar se utiliza http://maven.apache.org[Apache Maven].
 
+== Despliegue
 
-== Cómo compilar
-
-Para compilar se debe utilizar Apache Maven:
+Para compilar se debe ejecutar:
 
 [source, bash]
 ----
 mvn clean package
 ----
 
-== Cómo desplegar
+Luego, copiar el archivo `target/recepcion.war` a la carpeta `standalone/deployments` de un servidor de aplicaciones WildFly.
 
-Se debe copiar el archivo `target/recepcion.war` a la carpeta `standalone/deployments` de un servidor de aplicaciones WildFly 29.
 
-== Desarrollo
+Para almacenar archivos pdf temporalmente y acceder a ellos por HTTP se debe crear un directorio
+y asignarle permisos al usuario de wildfly.
 
-Para probar el servicio web se puede ejecutar los siguientes comandos desde consola:
+[source, bash]
+----
+sudo mkdir /opt/wildfly-static  >/dev/null 2>&1   &&
+sudo chown -RH wildfly: /opt/wildfly-static
+----
+
+Después, agregar las siguientes lineas en el archivo `/opt/wildfly/standalone/configuration/standalone.xml`
+
+[source, bash]
+----
+<host name="default-host" alias="localhost">
+  <location name="/static" handler="dirPdfs"/>
+...
+<!--
+</servlet-container>
+<handlers>-->
+  <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
+  <file name="dirPdfs" path="/opt/wildfly-static"/>
+----
+
+== Pruebas
+
+Para probar guardando un archivo se puede ejecutar los siguientes comandos desde terminal MacOS o utilizar Postman:
 
 [source,bash]
 ----
-export URL_SERVICIO="http://localhost:7776/recepcion/receiveDocument/saveSignedFile"  &&
-export BASE64=`base64 -w0 /home/<your-user>/Descargas/documento-ejemplo.pdf`   &&
-export JSON="{\"nombreDocumento\":\"documento-ejemplo.pdf\",\"archivo\":\"${BASE64}\"}"         &&
-export RESPUESTA=`curl -s -H "Content-Type: application/json" -X POST -d "${JSON}" ${URL_SERVICIO}`  &&  
-echo $RESPUESTA
+export BASE_URL="http://localhost:7776/recepcion/receiveDocument"
+
+export BASE64=$(base64 -i test.pdf | tr -d '\n')
+export JSON="{\"nombreDocumento\":\"test.pdf\",\"archivo\":\"${BASE64}\"}"
+curl -s -H "Content-Type: application/json" -X POST -d "${JSON}" "${BASE_URL}/saveSignedFile"
 ----
 
-
-Luego, enviamos la ruta absoluta del archivo generado anteriormente para probar el servicio:
+Luego, enviamos la ruta absoluta del archivo guardado anteriormente para probar el servicio:
 
 [source,bash]
 ----
-export URL_SERVICIO="http://localhost:7776/recepcion/receiveDocument/checkSignedFileExists?location="   &&
-export RUTA_DOC_A_VERIFICAR="/opt/wildfly-static/documento-ejemplo.pdf"   &&
-export URL_FINAL=${URL_SERVICIO}${RUTA_DOC_A_VERIFICAR}
-export RESPUESTA=`curl -s -H "Content-Type: application/json" -X GET ${URL_FINAL}`  &&  
-echo $RESPUESTA
+export RUTA_DOC_A_VERIFICAR="/opt/wildfly-static/test.pdf"
+export URL_FINAL=${BASE_URL}/checkSignedFileExists?location=${RUTA_DOC_A_VERIFICAR}
+curl -s -H "Content-Type: application/json" -X GET ${URL_FINAL}
 ----
 
-
-También se puede enviar la url del archivo generado anteriormente para probar el servicio:
+También se puede enviar la url del archivo guardado anteriormente:
 
 [source,bash]
 ----
-export URL_SERVICIO="http://localhost:7776/recepcion/receiveDocument/checkSignedFileExists?location="   &&
-export URL_DOC_A_VERIFICAR="http://localhost:7776/certificado1.pdf"   &&
-export URL_FINAL=${URL_SERVICIO}${RUTA_DOC_A_VERIFICAR}
-export RESPUESTA=`curl -s -H "Content-Type: application/json" -X GET ${URL_FINAL}`  &&  
-echo $RESPUESTA
+export URL_DOC_A_VERIFICAR="http://localhost:7776/static/test.pdf"
+export URL_FINAL=${BASE_URL}/checkSignedFileExists?location=${URL_DOC_A_VERIFICAR}
+curl -s -H "Content-Type: application/json" -X GET ${URL_FINAL}
 ----
-
 
 == Versiones
 
